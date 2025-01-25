@@ -3,8 +3,8 @@ package com.runningclub.web.service.impl;
 import com.runningclub.web.dto.ClubDto;
 import com.runningclub.web.models.Club;
 import com.runningclub.web.repository.ClubRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.runningclub.web.service.ClubService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +16,7 @@ public class ClubServiceImpl implements ClubService {
     public ClubServiceImpl(ClubRepository clubRepository) {
         this.clubRepository = clubRepository;
     }
+
     @Override
     public List<ClubDto> findAllClubs() {
         List<Club> clubs = clubRepository.findAll();
