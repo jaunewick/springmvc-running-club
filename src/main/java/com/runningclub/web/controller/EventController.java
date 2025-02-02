@@ -1,11 +1,14 @@
 package com.runningclub.web.controller;
 
+import com.runningclub.web.dto.EventDto;
 import com.runningclub.web.models.Event;
 import com.runningclub.web.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EventController {
@@ -21,5 +24,13 @@ public class EventController {
         model.addAttribute("clubId", clubId);
         model.addAttribute("event", event);
         return "events-create";
+    }
+
+    @PostMapping("/events/{clubId}")
+    public String createEvent(@PathVariable("clubId") long clubId,
+                              @ModelAttribute("event")EventDto eventDto,
+                              Model model) {
+        eventService.createEvent(clubId, eventDto);
+        return "redirect:/clubs/" + clubId;
     }
 }

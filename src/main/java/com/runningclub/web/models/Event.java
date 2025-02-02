@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -30,6 +30,6 @@ public class Event {
     private LocalDateTime updatedOn;
 
     @ManyToOne
-    @JoinColumn(name = "club_id", nullable = false)
+    @JoinColumn(name="club_id", nullable = false)
     private Club club;
 }
