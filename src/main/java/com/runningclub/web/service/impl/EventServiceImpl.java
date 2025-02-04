@@ -9,6 +9,8 @@ import com.runningclub.web.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.runningclub.web.mapper.EventMapper.mapToEvent;
+
 @Service
 public class EventServiceImpl implements EventService {
     private EventRepository eventRepository;
@@ -26,18 +28,5 @@ public class EventServiceImpl implements EventService {
         Event event = mapToEvent(eventDto);
         event.setClub(club);
         eventRepository.save(event);
-    }
-
-    private Event mapToEvent(EventDto eventDto) {
-        return Event.builder()
-                .id(eventDto.getId())
-                .name(eventDto.getName())
-                .startTime(eventDto.getStartTime())
-                .endTime(eventDto.getEndTime())
-                .type(eventDto.getType())
-                .photoUrl(eventDto.getPhotoUrl())
-                .createdOn(eventDto.getCreatedOn())
-                .updatedOn(eventDto.getUpdatedOn())
-                .build();
     }
 }
