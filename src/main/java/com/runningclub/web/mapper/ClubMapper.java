@@ -3,6 +3,10 @@ package com.runningclub.web.mapper;
 import com.runningclub.web.dto.ClubDto;
 import com.runningclub.web.models.Club;
 
+import java.util.stream.Collectors;
+
+import static com.runningclub.web.mapper.EventMapper.mapToEventDto;
+
 public class ClubMapper {
     public static Club mapToClub(ClubDto club) {
         Club clubDto = Club.builder()
@@ -24,6 +28,7 @@ public class ClubMapper {
                 .content(club.getContent())
                 .createdOn(club.getCreatedOn())
                 .updatedOn(club.getUpdatedOn())
+                .events(club.getEvents().stream().map((event) -> mapToEventDto(event)).collect(Collectors.toList()))
                 .build();
         return clubDto;
     }
