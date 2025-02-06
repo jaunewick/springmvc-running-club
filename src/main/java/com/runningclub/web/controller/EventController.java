@@ -55,7 +55,12 @@ public class EventController {
     @PostMapping("/events/{clubId}")
     public String createEvent(@PathVariable("clubId") long clubId,
                               @ModelAttribute("event")EventDto eventDto,
+                              BindingResult result,
                               Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("event", eventDto);
+            return "clubs-create";
+        }
         eventService.createEvent(clubId, eventDto);
         return "redirect:/clubs/" + clubId;
     }
@@ -68,7 +73,9 @@ public class EventController {
             model.addAttribute("event", event);
             return "events-edit";
         }
+        EventDto eventDto = eventService.findByEventId(eventId);
         event.setId(eventId);
+        event.setClub(eventDto.getClub());
         eventService.updateEvent(event);
         return "redirect:/events";
     }
