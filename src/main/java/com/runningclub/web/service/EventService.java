@@ -2,6 +2,7 @@ package com.runningclub.web.service;
 
 import com.runningclub.web.dto.EventDto;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public interface EventService {
@@ -10,4 +11,6 @@ public interface EventService {
     List<EventDto> findAllEvents();
 
     EventDto findByEventId(long eventId);
+
+    void updateEvent(@Valid EventDto eventDto);
 }
