@@ -1,5 +1,6 @@
 package com.runningclub.web.controller;
 
+import com.runningclub.web.dto.ClubDto;
 import com.runningclub.web.dto.EventDto;
 import com.runningclub.web.models.Event;
 import com.runningclub.web.service.EventService;
@@ -33,6 +34,13 @@ public class EventController {
         model.addAttribute("clubId", clubId);
         model.addAttribute("event", event);
         return "events-create";
+    }
+
+    @GetMapping("/events/{eventId}/edit")
+    public String editEventForm(@PathVariable("eventId") long eventId, Model model) {
+        EventDto event = eventService.findByEventId(eventId);
+        model.addAttribute("event", event);
+        return "events-edit";
     }
 
     @GetMapping("/events/{eventId}")
