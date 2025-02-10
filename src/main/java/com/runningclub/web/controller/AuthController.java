@@ -35,14 +35,14 @@ public class AuthController {
         if (existingEmail != null
         && existingEmail.getEmail() != null
         && !existingEmail.getEmail().isEmpty()) {
-            result.rejectValue("email", "There is already a user registered with that email");
+            result.rejectValue("email", "There is already a user registered with that email/username");
         }
 
         UserEntity existingUsername = userService.findUserByUsername(user.getUsername());
         if (existingUsername != null
         && existingUsername.getUsername() != null
         && !existingUsername.getUsername().isEmpty()) {
-            result.rejectValue("username", "There is already a user registered with that username");
+            result.rejectValue("username", "There is already a user registered with that email/username");
         }
 
         if (result.hasErrors()) {
