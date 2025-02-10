@@ -33,6 +33,9 @@
     </style>
     <div class="main">
         <div class="col-md-6 col-sm-12">
+            <div th:if="${param.fail}" class="alert alert-danger">
+                Username or email already exists!
+            </div>
             <div class="login-form">
                 <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
                     <div class="form-group">
@@ -63,7 +66,7 @@
                     </div>
                     <p th:if="${#fields.hasErrors('password')}" class="text-danger"></p>
                     <button th:href="@{/login}" type="submit" class="btn btn-black">Login</button>
-                    <button type="submit" class="btn btn-secondary">Register</button>
+                    <button th:href="@{/register}" type="submit" class="btn btn-secondary">Register</button>
                 </form>
             </div>
         </div>
