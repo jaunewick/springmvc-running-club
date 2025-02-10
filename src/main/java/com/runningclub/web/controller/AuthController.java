@@ -40,14 +40,14 @@ public class AuthController {
         if (existingEmail != null
         && existingEmail.getEmail() != null
         && !existingEmail.getEmail().isEmpty()) {
-            result.rejectValue("email", "There is already a user registered with that email/username");
+            return "redirect:/register?fail";
         }
 
         UserEntity existingUsername = userService.findUserByUsername(user.getUsername());
         if (existingUsername != null
         && existingUsername.getUsername() != null
         && !existingUsername.getUsername().isEmpty()) {
-            result.rejectValue("username", "There is already a user registered with that email/username");
+            return "redirect:/register?fail";
         }
 
         if (result.hasErrors()) {
@@ -56,6 +56,6 @@ public class AuthController {
         }
 
         userService.saveUser(user);
-        return "redirect:/clubs?success=true";
+        return "redirect:/clubs?success";
     }
 }
