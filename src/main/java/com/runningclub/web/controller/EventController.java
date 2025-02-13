@@ -1,6 +1,5 @@
 package com.runningclub.web.controller;
 
-import com.runningclub.web.dto.ClubDto;
 import com.runningclub.web.dto.EventDto;
 import com.runningclub.web.models.Event;
 import com.runningclub.web.service.EventService;
