@@ -2,7 +2,10 @@ package com.runningclub.web.controller;
 
 import com.runningclub.web.dto.ClubDto;
 import com.runningclub.web.models.Club;
+import com.runningclub.web.models.UserEntity;
+import com.runningclub.web.security.SecurityUtil;
 import com.runningclub.web.service.ClubService;
+import com.runningclub.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,19 +14,29 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ClubController {
     private ClubService clubService;
+    private UserService userService;
 
     @Autowired
-    public ClubController(ClubService clubService) {
+    public ClubController(ClubService clubService, UserService userService) {
         this.clubService = clubService;
+        this.userService = userService;
     }
 
     @GetMapping("/clubs")
     public String listClubs(Model model) {
+        UserEntity user = new UserEntity();
         List<ClubDto> clubs = clubService.findAllClubs();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findUserByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("clubs", clubs);
         return "clubs-list";
     }
