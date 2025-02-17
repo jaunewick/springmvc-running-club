@@ -2,7 +2,10 @@ package com.runningclub.web.controller;
 
 import com.runningclub.web.dto.EventDto;
 import com.runningclub.web.models.Event;
+import com.runningclub.web.models.UserEntity;
+import com.runningclub.web.security.SecurityUtil;
 import com.runningclub.web.service.EventService;
+import com.runningclub.web.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,14 +20,23 @@ import java.util.List;
 @Controller
 public class EventController {
     private EventService eventService;
+    private UserService userService;
 
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
+        this.userService = userService;
     }
 
     @GetMapping("/events")
     public String eventList(Model model) {
+        UserEntity user = new UserEntity();
         List<EventDto> events = eventService.findAllEvents();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findUserByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("events", events);
         return "events-list";
     }
