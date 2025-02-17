@@ -58,7 +58,15 @@ public class EventController {
 
     @GetMapping("/events/{eventId}")
     public String viewEvent(@PathVariable("eventId") long eventId, Model model) {
+        UserEntity user = new UserEntity();
         EventDto eventDto = eventService.findByEventId(eventId);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findUserByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("club", eventDto);
+        model.addAttribute("user", user);
         model.addAttribute("event", eventDto);
         return "events-detail";
     }
